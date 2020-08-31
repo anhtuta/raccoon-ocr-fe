@@ -1,0 +1,51 @@
+import React from 'react';
+import ReactTable from 'react-table-v6';
+import 'react-table-v6/react-table.css';
+import './Table.scss';
+
+const DEFAULT_PAGE_SIZE = 20;
+
+const Table = (props) => {
+  const onFetchData = (state) => {
+    const { page, pageSize, sorted } = state;
+    const params = {
+      page,
+      size: pageSize,
+      sortBy: sorted.length > 0 ? sorted[0].id : null,
+      sortOrder: sorted.length > 0 ? (sorted[0].desc ? 'desc' : 'asc') : null
+    };
+    props.onFetchData(params);
+  };
+
+  const {
+    columns,
+    data,
+    className,
+    defaultPageSize,
+    loading,
+    showPagination = true
+  } = props;
+  const pages = data.totalPages;
+  const defaultProps = {
+    manual: true,
+    defaultPageSize: defaultPageSize ? defaultPageSize : DEFAULT_PAGE_SIZE,
+    pageSizeOptions: [5, 10, 20, 25, 50, 100],
+    resizable: true
+  };
+
+  const dynamicProps = {
+    className: `-striped -highlight ${className ? className : ''}`,
+    showPagination: pages && pages > 0 && showPagination,
+    onFetchData,
+    columns,
+    data: data.list,
+    pages,
+    loading
+  };
+
+  const nestedProps = { ...defaultProps, ...dynamicProps };
+
+  return <ReactTable {...nestedProps} />;
+};
+
+export default Table;

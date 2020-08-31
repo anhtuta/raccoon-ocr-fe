@@ -1,0 +1,30 @@
+.section-wrapper {
+  .header-section {
+    .products-details {
+      .computer-vision {
+        color: #2199f9;
+        background: #e6fffb;
+        border-color: #87e8de;
+        display: inline-block;
+        padding: 5px;
+        white-space: nowrap;
+        margin: 10px 0;
+        cursor: pointer;
+        border: 1px solid #2199f9;
+        border-radius: 2px;
+        &:hover {
+          color: #5bb5ff;
+        }
+      }
+    }
+  }
+
+  .main-section {
+    .output-section {
+      .text-table {
+        height: 400px;
+        margin: 20px 0;
+      }
+    }
+  }
+}

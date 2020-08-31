@@ -1,0 +1,8 @@
+.ReactTable {
+  .rt-th,
+  .rt-td {
+    white-space: unset;
+    max-height: 250px;
+    overflow-y: auto;
+  }
+}
