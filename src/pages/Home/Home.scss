@@ -1,5 +1,9 @@
 .section-wrapper {
+  .section-title {
+    text-align: center;
+  }
   .header-section {
+    padding: 10px 7%;
     .products-details {
       .computer-vision {
         color: #2199f9;
@@ -20,6 +24,7 @@
   }
 
   .main-section {
+    padding: 10px 7%;
     .output-section {
       .text-table {
         height: 400px;

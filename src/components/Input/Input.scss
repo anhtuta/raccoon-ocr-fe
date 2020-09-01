@@ -1,0 +1,44 @@
+.input-wrapper {
+  .input-label {
+    margin-bottom: 0.2rem;
+    .input-require {
+      color: red;
+    }
+  }
+  .input-file-wrapper {
+    .input-file-name {
+      display: inline-block;
+      border: 1px solid #aaa;
+      width: calc(100% - 111px);
+      height: 34px;
+      position: relative;
+      padding: 5px;
+      padding-right: 62px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    .input-file-browse {
+      background: #aaa;
+      color: #fff;
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 5px;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .input-file-status {
+      display: inline-block;
+      position: relative;
+      top: -11px;
+      margin-left: 5px;
+      .upload-success i {
+        color: #40e000;
+      }
+      .upload-fail i {
+        color: red;
+      }
+    }
+  }
+}
