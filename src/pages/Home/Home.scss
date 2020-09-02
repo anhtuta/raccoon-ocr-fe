@@ -1,6 +1,7 @@
 .section-wrapper {
   .section-title {
     text-align: center;
+    color: #2199f9;
   }
   .header-section {
     padding: 10px 7%;
@@ -26,9 +27,23 @@
   .main-section {
     padding: 10px 7%;
     .output-section {
-      .text-table {
-        height: 400px;
-        margin: 20px 0;
+      display: flex;
+      .output-file,
+      .output-text {
+        height: 600px;
+        overflow: auto;
+      }
+      .output-file {
+        margin-right: 5px;
+        border: 1px solid #2199f9;
+        border-radius: 3px;
+        flex-basis: 100%;
+      }
+      .output-text {
+        margin-left: 5px;
+        border: 1px solid #2199f9;
+        border-radius: 3px;
+        flex-basis: 100%;
       }
     }
   }

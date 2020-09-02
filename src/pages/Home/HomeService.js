@@ -1,7 +1,14 @@
 import axiosClient from '../../service/axiosClient';
 
-const uploadFile = (data) => {
-  return axiosClient.post('/api/upload/file', data);
+const uploadFile = (data, successCallback, failCallback) => {
+  axiosClient
+    .post('/api/file/upload', data)
+    .then((res) => {
+      successCallback(res);
+    })
+    .catch((err) => {
+      failCallback(err);
+    });
 };
 
 export default {

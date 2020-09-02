@@ -9,10 +9,12 @@ class InputFile extends PureComponent {
 
   onChange = (e) => {
     const file = e.target.files[0];
-    this.setState({
-      fileName: file.name
-    });
-    this.props.onChange(file);
+    if (file) {
+      this.setState({
+        fileName: file.name
+      });
+      this.props.onChange(file);
+    }
   };
 
   render() {
@@ -30,8 +32,8 @@ class InputFile extends PureComponent {
     return (
       <div className="input-wrapper">
         <label className="input-label">
-          {label}&nbsp;
-          {isRequire && <span className="input-require">*</span>}
+          {label}
+          {isRequire && <span className="input-require">&nbsp;*</span>}
         </label>
         <div className="input-file-wrapper">
           <input
@@ -50,19 +52,19 @@ class InputFile extends PureComponent {
                 this.inputFile.click();
               }}
             >
-              Browse
+              <i className="far fa-file"></i> Browse
             </span>
           </div>
           <span className="input-file-status">
             {uploading && <span className="uploading">Uploading...</span>}
             {!uploading && uploaded && uploadSuccess && (
               <span className="upload-success">
-                <i class="far fa-check-circle"></i> Succeeced
+                <i className="far fa-check-circle"></i> Succeeced
               </span>
             )}
             {!uploading && uploaded && !uploadSuccess && (
               <span className="upload-fail">
-                <i class="far fa-times-circle"></i> Failed
+                <i className="far fa-times-circle"></i> Failed
               </span>
             )}
           </span>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Menu from './components/Menu/Menu';
 import routes from './routes';
 import { Switch, Route, HashRouter } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './scss/App.scss';
 
 class App extends Component {
@@ -11,6 +13,7 @@ class App extends Component {
         <div className="app">
           <Menu />
           <div className="app-content">{this.showContentMenus(routes)}</div>
+          <ToastContainer />
         </div>
       </HashRouter>
     );

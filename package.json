@@ -14,9 +14,11 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
+    "react-pdf": "^5.0.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "react-table-v6": "^6.8.6",
+    "react-toastify": "^6.0.8",
     "reactstrap": "^8.5.1"
   },
   "scripts": {

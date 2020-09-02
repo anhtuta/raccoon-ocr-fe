@@ -1,6 +1,8 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
+export const BAST_URL = 'http://localhost:9010/boot-tech';
+
 const cleanParam = (obj) => {
   Object.keys(obj).forEach((k) => {
     if (obj[k] === null || obj[k] === undefined) {
@@ -11,7 +13,7 @@ const cleanParam = (obj) => {
 };
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:9010/boot-tech',
+  baseURL: BAST_URL,
   headers: {
     'content-type': 'application/json'
   },
