@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTable from 'react-table-v6';
+import PropTypes from 'prop-types';
 import 'react-table-v6/react-table.css';
 import './Table.scss';
 
@@ -14,7 +15,7 @@ const Table = (props) => {
       sortBy: sorted.length > 0 ? sorted[0].id : null,
       sortOrder: sorted.length > 0 ? (sorted[0].desc ? 'desc' : 'asc') : null
     };
-    props.onFetchData(params);
+    if (props.onFetchData) props.onFetchData(params);
   };
 
   const {
@@ -46,6 +47,12 @@ const Table = (props) => {
   const nestedProps = { ...defaultProps, ...dynamicProps };
 
   return <ReactTable {...nestedProps} />;
+};
+
+Table.propTypes = {
+  data: PropTypes.object.isRequired,
+  columns: PropTypes.array.isRequired,
+  onFetchData: PropTypes.func
 };
 
 export default Table;

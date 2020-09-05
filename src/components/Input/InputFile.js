@@ -44,7 +44,11 @@ class InputFile extends PureComponent {
             onChange={this.onChange}
           />
           <div className="input-file-name">
-            {fileName ? fileName : 'Please upload a file...'}
+            {fileName ? (
+              fileName
+            ) : (
+              <span style={{ color: '#a2a2a2' }}>Please upload a file...</span>
+            )}
             <span
               className="input-file-browse"
               disabled={disabled}
@@ -56,7 +60,11 @@ class InputFile extends PureComponent {
             </span>
           </div>
           <span className="input-file-status">
-            {uploading && <span className="uploading">Uploading...</span>}
+            {uploading && (
+              <span className="uploading">
+                <span className="uploading-icon"></span>Uploading...
+              </span>
+            )}
             {!uploading && uploaded && uploadSuccess && (
               <span className="upload-success">
                 <i className="far fa-check-circle"></i> Succeeced

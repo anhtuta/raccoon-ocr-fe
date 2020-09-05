@@ -1,0 +1,17 @@
+.navbar-nav {
+  display: flex;
+  flex-direction: row !important;
+  li {
+    margin: 7px;
+    a {
+      color: #2199f9;
+      &:hover {
+        text-decoration: none;
+        color: #007add;
+      }
+    }
+  }
+  .active-menu {
+    border-bottom: 3px solid #2199f9;
+  }
+}
