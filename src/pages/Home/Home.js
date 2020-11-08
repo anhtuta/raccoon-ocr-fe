@@ -26,11 +26,13 @@ class Home extends PureComponent {
     {
       Header: 'Thuộc tính',
       accessor: 'attribute',
-      maxWidth: 120
+      maxWidth: 120,
+      sortable: false
     },
     {
       Header: 'Giá trị',
-      accessor: 'value'
+      accessor: 'value',
+      sortable: false
     }
   ];
 

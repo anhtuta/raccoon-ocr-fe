@@ -1,9 +1,6 @@
 import axios from 'axios';
 import queryString from 'query-string';
 
-// export const BASE_URL = 'http://localhost:9010/boot-tech';
-export const BASE_URL = 'http://717581468f6f.ngrok.io';
-
 const cleanParam = (obj) => {
   Object.keys(obj).forEach((k) => {
     if (obj[k] === null || obj[k] === undefined) {
@@ -14,7 +11,7 @@ const cleanParam = (obj) => {
 };
 
 const axiosClient = axios.create({
-  baseURL: BASE_URL,
+  baseURL: process.env.REACT_APP_HOST_API,
   headers: {
     'content-type': 'application/json'
   },
