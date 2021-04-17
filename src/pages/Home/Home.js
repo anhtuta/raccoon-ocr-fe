@@ -3,9 +3,12 @@ import Table from '../../components/Table/Table';
 import InputFile from '../../components/Input/InputFile';
 import Toast from '../../components/Toast/Toast';
 import { Document, Page } from 'react-pdf/dist/umd/entry.webpack';
+import { COLUMN_MAPPING, SAMPLE_RESPONSE } from './HomeConstant';
 import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 import HomeService from './HomeService';
 import './Home.scss';
+
+const SECRET_DOC = 'Đây là văn bản mật, KHÔNG được phép trích xuất!';
 
 class Home extends PureComponent {
   state = {
@@ -32,54 +35,69 @@ class Home extends PureComponent {
     {
       Header: 'Giá trị',
       accessor: 'value',
-      sortable: false
+      sortable: false,
+      getProps: (state, rowInfo, column) => {
+        const value = rowInfo ? rowInfo.original.value : null;
+        let color;
+        switch (value) {
+          case SECRET_DOC:
+            color = '#dc3545';
+            break;
+          default:
+            color = null;
+            break;
+        }
+
+        return {
+          style: {
+            color: color,
+            fontWeight: color ? 'bold' : null
+          }
+        };
+      }
     }
   ];
-
-  columnMapping = {
-    date: 'Ngày',
-    header: 'Tiêu đề',
-    number: 'Số văn bản',
-    quote: 'Trích yếu',
-    send: 'Nơi gửi',
-    sign: 'Chữ ký',
-    type_doc: 'Kiểu văn bản'
-  };
-
-  jsonDemo = {
-    date: ['Hà Nội, ngày 19 tháng 6 năm 2020'],
-    header: [],
-    number: ['Số 197/BC-TM'],
-    quote: [],
-    send: ['BỘ TƯ LỆNH CẢNH SÁT BIẾN', 'ĐOÀN CÔNG TÁC'],
-    sign: []
-  };
 
   convertJson = (json) => {
     const res = {};
     let list = [];
+    let isSecret = false;
 
     for (let key in json) {
       let value = json[key];
 
+      if (key === 'stamp' && value === true) {
+        isSecret = true;
+        break;
+      }
+
       if (Array.isArray(value)) {
         list.push({
-          attribute: this.columnMapping[key],
+          attribute: COLUMN_MAPPING[key],
           value: value.join(', ')
         });
       } else {
         list.push({
-          attribute: this.columnMapping[key],
+          attribute: COLUMN_MAPPING[key],
           value
         });
       }
     }
+
+    if (isSecret) {
+      list = [];
+      list.push({
+        attribute: 'Tuyệt mật',
+        value: SECRET_DOC
+      });
+    }
+
     res.list = list;
     res.totalPages = 1;
     return res;
   };
 
-  fileTypes = ['.jpg', '.pdf'];
+  fileTypes = ['.jpg', '.png', '.pdf'];
   uploadFile = (file) => {
     if (file) {
       let extension = '.' + file.name.split('.').pop().toLowerCase();
@@ -91,7 +109,7 @@ class Home extends PureComponent {
           uploadSuccess: false
         });
         let formData = new FormData();
-        formData.append('file', file);
+        formData.append('img', file);
         HomeService.uploadFile(
           formData,
           (res) => {
@@ -135,6 +153,7 @@ class Home extends PureComponent {
       uploadSuccess,
       numPages
     } = this.state;
+    console.log(this.state);
     return (
       <div className="section-wrapper">
         <div className="header-section">
@@ -204,8 +223,8 @@ class Home extends PureComponent {
             </div>
             {uploadSuccess && (
               <div className="output-section">
-                <div className="output-file">
-                  {/* Ref: https://github.com/wojtekmaj/react-pdf/blob/master/sample/webpack/Sample.jsx */}
+                {/* Ref: https://github.com/wojtekmaj/react-pdf/blob/master/sample/webpack/Sample.jsx */}
+                {/* <div className="output-file">
                   <Document
                     file={file}
                     onLoadSuccess={this.onDocumentLoadSuccess}
@@ -218,7 +237,7 @@ class Home extends PureComponent {
                       <Page key={`page_${index + 1}`} pageNumber={index + 1} />
                     ))}
                   </Document>
-                </div>
+                </div> */}
                 <div className="output-text">
                   <Table
                     columns={this.columns}

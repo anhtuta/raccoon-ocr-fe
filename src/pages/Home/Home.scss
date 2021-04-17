@@ -100,19 +100,19 @@
         $outputMargin: 5px;
         .output-file,
         .output-text {
-          height: 600px;
+          // height: 600px;
           overflow: auto;
           border: 1px solid #2199f9;
           flex-basis: 100%;
           border-radius: 3px;
           flex-basis: 100%;
         }
-        .output-file {
-          margin-right: $outputMargin;
-        }
-        .output-text {
-          margin-left: $outputMargin;
-        }
+        // .output-file {
+        //   margin-right: $outputMargin;
+        // }
+        // .output-text {
+        //   margin-left: $outputMargin;
+        // }
       }
     }
   }
