@@ -8,16 +8,24 @@ export const COLUMN_MAPPING = {
   type_doc: 'Kiểu văn bản'
 };
 
-export const SAMPLE_RESPONSE = {
+export const SAMPLE_RESPONSE_1 = {
   date: ['Hà Nội, ngày 19 tháng 6 năm 2020'],
-  header: ['QUYẾT ĐỊNH'],
+  header: ['BÁO CÁO'],
   number: ['Số 197/BC-TM'],
   quote: [
-    'Ban hành kế hoạch phối hợp',
-    'Bầu cử đại biểu quốc hội khóa XV',
-    'nhiệm kì 2021 - 2026'
+    'Kết quả tham dự Hội thảo',
+    'demo thiết bị giám sát',
+    'điện thoại vệ tinh cấp chiến thuật'
   ],
-  send: ['BỘ TƯ LỆNH CẢNH SÁT BIẾN', 'ĐOÀN CÔNG TÁC'],
-  stamp: true,
-  sign: ['Không có :))']
+  send: ['BỘ TƯ LỆNH CẢNH SÁT BIÊN', 'ĐOÀN CÔNG TÁC'],
+  stamp: []
+};
+
+export const SAMPLE_RESPONSE_2 = {
+  date: [],
+  header: [],
+  number: [],
+  quote: [],
+  send: [],
+  stamp: true
 };

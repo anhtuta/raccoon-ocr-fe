@@ -2,13 +2,18 @@ import React, { PureComponent } from 'react';
 import Table from '../../components/Table/Table';
 import InputFile from '../../components/Input/InputFile';
 import Toast from '../../components/Toast/Toast';
-import { Document, Page } from 'react-pdf/dist/umd/entry.webpack';
-import { COLUMN_MAPPING, SAMPLE_RESPONSE } from './HomeConstant';
-import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
+// import { Document, Page } from 'react-pdf/dist/umd/entry.webpack';
+import { COLUMN_MAPPING, SAMPLE_RESPONSE_1, SAMPLE_RESPONSE_2 } from './HomeConstant';
 import HomeService from './HomeService';
+import docsSample1 from '../../assets/images/docs-sample-1.png';
+import docsSample2 from '../../assets/images/docs-sample-2.png';
+import 'react-pdf/dist/umd/Page/AnnotationLayer.css';
 import './Home.scss';
+import RadioButton from '../../components/Input/RadioButton';
 
 const SECRET_DOC = 'Đây là văn bản mật, KHÔNG được phép trích xuất!';
+const DOCS_SAMPLE_1 = 'DOCS_SAMPLE_1';
+const DOCS_SAMPLE_2 = 'DOCS_SAMPLE_2';
 
 class Home extends PureComponent {
   state = {
@@ -22,7 +27,10 @@ class Home extends PureComponent {
     uploading: false,
     uploaded: false,
     uploadSuccess: false,
-    numPages: null
+    docsSampleSuccess: false,
+    numPages: null,
+    docsSample: null,
+    fakeLoading: false
   };
 
   columns = [
@@ -106,7 +114,9 @@ class Home extends PureComponent {
           fileName: file.name,
           uploading: true,
           uploaded: false,
-          uploadSuccess: false
+          uploadSuccess: false,
+          docsSampleSuccess: false,
+          docsSample: null
         });
         let formData = new FormData();
         formData.append('img', file);
@@ -116,7 +126,7 @@ class Home extends PureComponent {
             this.setState({
               file,
               textData: this.convertJson(res),
-              // textData: this.convertJson(this.jsonDemo),
+              // textData: this.convertJson(SAMPLE_RESPONSE_1),
               uploading: false,
               uploaded: true,
               uploadSuccess: true
@@ -143,15 +153,47 @@ class Home extends PureComponent {
     this.setState({ numPages });
   };
 
+  getRndInteger = (min, max) => {
+    return Math.floor(Math.random() * (max - min)) + min;
+  };
+
+  onChangeDocsSample = (name, value) => {
+    this.setState({
+      docsSampleSuccess: false,
+      fakeLoading: true,
+      docsSample: value
+    });
+
+    // returns a random integer from 1000 to 3000
+    const randomFakeLoading = this.getRndInteger(1000, 3000);
+    setTimeout(() => {
+      let textData = '';
+      if (value === DOCS_SAMPLE_1) {
+        textData = this.convertJson(SAMPLE_RESPONSE_1);
+      } else if (value === DOCS_SAMPLE_2) {
+        textData = this.convertJson(SAMPLE_RESPONSE_2);
+      }
+
+      this.setState({
+        docsSampleSuccess: true,
+        fakeLoading: false,
+        textData
+      });
+    }, randomFakeLoading);
+  };
+
   render() {
     const {
       textData,
-      file,
+      // file,
       fileName,
       uploading,
       uploaded,
       uploadSuccess,
-      numPages
+      docsSampleSuccess,
+      docsSample,
+      fakeLoading
+      // numPages
     } = this.state;
     console.log(this.state);
     return (
@@ -164,9 +206,6 @@ class Home extends PureComponent {
               the general model so that we could customize it so that it could work better
               on some specific document
             </p>
-            <div className="availability">
-              published by <span>Tuzaku</span>
-            </div>
             <span className="computer-vision">Computer Vision</span>
             <div className="shape-wrapper">
               <div className="shape3">
@@ -212,6 +251,7 @@ class Home extends PureComponent {
           <div className="main-section-wrapper">
             <div className="input-section">
               <h3 className="section-title">TRY OUR DEMO</h3>
+              <h4>Upload your own file</h4>
               <InputFile
                 onChange={this.uploadFile}
                 types={this.fileTypes}
@@ -220,9 +260,52 @@ class Home extends PureComponent {
                 uploaded={uploaded}
                 uploadSuccess={uploadSuccess}
               />
+              <h4>Or using our sample file</h4>
+              <div className="sample-file-wrapper">
+                <div className="sample-file-item">
+                  <img
+                    className="sample-file-image"
+                    src={docsSample1}
+                    alt="docs-sample-1"
+                  />
+                  <RadioButton
+                    label="Docs sample 1"
+                    labelClassName="blue-color"
+                    name="docsSample"
+                    value={DOCS_SAMPLE_1}
+                    onChange={this.onChangeDocsSample}
+                    checked={docsSample === DOCS_SAMPLE_1}
+                    disabled={fakeLoading}
+                  />
+                </div>
+                <div className="sample-file-item">
+                  <img
+                    className="sample-file-image"
+                    src={docsSample2}
+                    alt="docs-sample-2"
+                  />
+                  <RadioButton
+                    label="Docs sample 2"
+                    labelClassName="blue-color"
+                    name="docsSample"
+                    value={DOCS_SAMPLE_2}
+                    onChange={this.onChangeDocsSample}
+                    checked={docsSample === DOCS_SAMPLE_2}
+                    disabled={fakeLoading}
+                  />
+                </div>
+              </div>
             </div>
-            {uploadSuccess && (
+            {fakeLoading && (
+              <div className="loading-section">
+                <span className="uploading">
+                  <span className="uploading-icon"></span>Processing, please wait...
+                </span>
+              </div>
+            )}
+            {(uploadSuccess || docsSampleSuccess) && (
               <div className="output-section">
+                <h4>Result</h4>
                 {/* Ref: https://github.com/wojtekmaj/react-pdf/blob/master/sample/webpack/Sample.jsx */}
                 {/* <div className="output-file">
                   <Document
