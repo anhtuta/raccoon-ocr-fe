@@ -23,6 +23,7 @@ class InputFile extends PureComponent {
       disabled,
       types,
       label,
+      placeHolder,
       isRequire = false,
       uploading,
       uploaded,
@@ -49,7 +50,9 @@ class InputFile extends PureComponent {
             {fileName ? (
               fileName
             ) : (
-              <span style={{ color: '#a2a2a2' }}>Please upload a file...</span>
+              <span style={{ color: '#a2a2a2' }}>
+                {placeHolder ? placeHolder : 'Please upload a file...'}
+              </span>
             )}
             <span
               className="input-file-browse"
